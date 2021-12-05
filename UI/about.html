@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About</title>
+
+  <!--Openlayers, Turf and leaflet-->
+  <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v4.6.5/build/ol.js"></script>
+  <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+   integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+   crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+  integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+  crossorigin=""></script>
+
+  <!--SweetAlert-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.css">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <style>
+    .myButton {
+
+      padding: 30px;
+      display:block;
+      background-color: green;
+      color: white;
+      text-align:center;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+
+      }
+      .responsive {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+  </style>
+  <script>
+    function logout() {
+            eraseCookie("username");
+            eraseCookie("user_key");
+            window.location.href = 'login.html';
+      }
+  </script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">About</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+    </ul>
+
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <div onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <img src="./icon.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Connect+</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="./dist/img/user.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div id="username" class="info"></div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+               <li class="nav-item has-treeview" id="user_farms">
+                <a href="myfiles.html" class="nav-link" id="info">
+                  <i class="nav-icon fa fa-folder"></i>
+                  <p>
+                    My Drive
+                  </p>
+                </a>
+                <!--<ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="fas fa-leaf nav-icon"></i>
+                      <p>Ex: Farm 1</p>
+                    </a>
+                  </li>
+                </ul>!--->
+              </li>
+          <li class="nav-item has-treeview">
+            <a href="upload.html" class="nav-link" id="uploadpage">
+              <i class="nav-icon fa fa-upload"></i>
+              <p>
+                Upload Files
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="Public.html" class="nav-link" id="schedule">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                Public
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Connect+</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">About</a></li>
+              <li class="breadcrumb-item ">Connect+</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="container-fluid">
+        <div class="row" id="about">
+          <img src="./dist/img/wp3929762.jpg" height="auto" max-width="50%" class="responsive">
+        </div><br>
+        <div class="row">
+            <div class="col-12">
+              <!-- Default box -->
+              <div class="card" id="api">
+                <div class="card-header">
+                  <h3 class="card-title">About</h3>
+  
+                  <div class="card-tools">
+                  </div>
+                </div>
+                <div class="card-body">
+                    <p>There is always a need to store data in a redundant place for the purpose of back-ups, it is also extremely important to transfer and store this data in a secure manner. This stored data might also need to be shared among users belonging to the same group or such kind.
+                      Everything the user needs to access the application is to connect to the same network as the device hosting the system, after which the users are good to go. Every user has his/her own space where the user can store data. Both the transfer and storage of data is securely encrypted using Hybrid Encryption. Users can also select files that can be made public. Once a file is public it can be accessed by all users registered to the application.
+                    
+                    </p>
+                    <p>All you have to do is register using your mobile number, using which you can log in and start using the application.
+                    </p>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Contact Us</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Contact Us</a></li>
+                <li class="breadcrumb-item ">Connect+</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      <div class="container-fluid">
+        <div class="row" id="contact">
+            <div class="col-md-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-address-card"></i></span>
+
+                <div class="info-box-content">
+                <span class="info-box-text">Balaji</span>
+                <span class="info-box-number">balajiramakrishnan07@gmail.com</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            </div>
+            <div class="col-md-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-address-card"></i></span>
+
+                <div class="info-box-content">
+                <span class="info-box-text">Rithish</span>
+                <span class="info-box-number">rithishramachandran09@gmail.com</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<script>
+  document.getElementById("myfarms").onclick = function () {
+    location.href = "myfarms.html";
+  };
+  document.getElementById("schedule").onclick = function () {
+      location.href = "schedule.html";
+  };
+  document.getElementById("firstpage").onclick = function () {
+      location.href = "index.html";
+  };
+
+</script>
+
+
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!--<script src="js/map.js"></script>!-->
+<script src="js/cookie.js"></script>
+
+<script>
+  //set username in the sidebar
+  function deltask(tid){
+
+    console.log('In deltask ', tid)
+    $.ajax({
+        url : 'http://127.0.0.1:5010/deltask?taskid=' + tid,
+        type : 'POST',
+        cors : true,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        },
+        contentType: 'application/json',
+        success : function(data)
+        {
+            console.log(data);
+        }
+     });
+     window.location.reload();
+
+}
+
+  window.onload = function() {
+
+      var ht_text, ht_text2;
+      var user_name = getCookie('username');
+      var user_id = 202;
+      console.log(user_name);
+      var tag = "<a href='#' class='d-block'>"+user_name+"</a>"
+      $("#username").html(tag);
+
+    $.ajax({
+      url : 'http://127.0.0.1:5010/fetchtasks?userid=' + user_id,
+      type : 'POST',
+      cors : true,
+      headers: {
+      'Access-Control-Allow-Origin': '*',
+      },
+      contentType: 'application/json',
+      success : function(data)
+      {
+          console.log(data.pending.length);
+          //console.log(data.pending[0]);
+          for(let i=0; i<data.pending.length; i++){
+            ht_text = '<div class="row"> <div class="col-12"> <div class="card"> <div class="card-header"> <h3 class="card-title">'+ data.pending[i].title +'</h3>         <small class="badge badge-warning"><i class="far fa-clock"></i> '+ data.pending[i].seton +'</small> <div class="card-tools"> <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"> <i class="fas fa-minus"></i></button> </div> </div> <div class="card-body"> <div class="row"> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-info"><i class="fas fa-leaf"></i></span> <div class="info-box-content"> <span class="info-box-text">Farm Name</span> <span class="info-box-number">'+ data.pending[i].name +' ('+data.pending[i].farmid + ') '+'</span> </div>  </div>  </div> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-warning"><i class="fas fa-bell"></i></span> <div class="info-box-content"> <span class="info-box-text">Task ID</span> <span class="info-box-number">'+ data.pending[i].tid +'</span> </div>  </div>  </div> </div> <div class="row"> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-success"><i class="fas fa-edit"></i></span> <div class="info-box-content"> <span class="info-box-text">Description</span> <span class="info-box-number">'+ data.pending[i].desc + '</span> </div>  </div>  </div> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-danger"><i class="fas fa-tasks"></i></span> <div class="info-box-content"> <span class="info-box-text">Priority</span> <span class="info-box-number">'+  data.pending[i].priority +'</span> </div>  </div>  </div> </div> </div>  <div class="card-footer"> <form method ="post" action="status"> <button type="button" class="btn btn-primary" name="accept" onclick="deltask('+ data.pending[i].tid +')"> Done </button>  </form> </div>  </div>   </div> </div><br>';
+            document.getElementById("task_pend").innerHTML += ht_text;
+            //console.log(ht_text) 
+          }
+
+          console.log(data.remaining.length);
+          //console.log(data.pending[0]);
+          for(let i=0; i<data.remaining.length; i++){
+            ht_text2 = '<div class="row"> <div class="col-12"> <div class="card"> <div class="card-header"> <h3 class="card-title">'+ data.remaining[i].title +'</h3>         <small class="badge badge-warning"><i class="far fa-clock"></i> '+ data.remaining[i].seton +'</small> <div class="card-tools"> <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"> <i class="fas fa-minus"></i></button> </div> </div> <div class="card-body"> <div class="row"> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-info"><i class="fas fa-leaf"></i></span> <div class="info-box-content"> <span class="info-box-text">Farm Name</span> <span class="info-box-number">'+ data.remaining[i].name +' ('+data.remaining[i].farmid + ') '+'</span> </div>  </div>  </div> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-warning"><i class="fas fa-bell"></i></span> <div class="info-box-content"> <span class="info-box-text">Task ID</span> <span class="info-box-number">'+ data.remaining[i].tid +'</span> </div>  </div>  </div> </div> <div class="row"> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-success"><i class="fas fa-edit"></i></span> <div class="info-box-content"> <span class="info-box-text">Description</span> <span class="info-box-number">'+ data.remaining[i].desc + '</span> </div>  </div>  </div> <div class="col-md-6 col-sm-6 col-12"> <div class="info-box"> <span class="info-box-icon bg-danger"><i class="fas fa-tasks"></i></span> <div class="info-box-content"> <span class="info-box-text">Priority</span> <span class="info-box-number">'+  data.remaining[i].priority +'</span> </div>  </div>  </div> </div> </div>  <div class="card-footer"> <form method ="post" action="status"> <button type="button" class="btn btn-primary" name="accept" onclick="deltask('+ data.remaining[i].tid +')"> Done </button> </form> </div>  </div>   </div> </div><br>';
+            document.getElementById("task_rem").innerHTML += ht_text2;
+            //console.log(ht_text) 
+          }
+      }
+    });
+
+
+      //fetchfarms(getCookie('user_key'));
+      //drawFarm(getCookie('user_key'));
+
+    };
+
+    function myfarms_id(id) {
+            console.log($(id).attr('id'));
+            var id_with_name = $(id).attr('id');
+            str_arr = id_with_name.split("/");
+            var farmid = str_arr[0]
+            var set_farmname = str_arr[1]
+            setCookie('farm_id', farmid, 1);
+            setCookie('farm_name', set_farmname, 1);
+            window.location.href = 'myfarms.html'
+        }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+#electric calculator
+curl -# --header "Content-Type: application/json" --request POST --data '{"amp":"","volt":"","watt":"","time":"","kva":"","kw":"","joule":"","va":"","wh":"","mah":""}'   http://localhost:5000/electricConvertion/
+
+
+#huffman_coding
+curl -# --header "Content-Type: application/json" --request POST --data '{"message":"rithish"}'   http://localhost:5000/huffman_coding/
+
+#length_algorithm
+curl --header "Content-Type: application/json" --request POST --data '{"message":"rithish"}'  http://localhost:5000/length_algorithm/
+
+
+#date_difference
+curl --header "Content-Type: application/json" --request POST --data '{"date1" : "12-11-2020 00:00:00" ,"date2" : "01-01-2021 00:00:00","last_day" : "no"}'  http://localhost:5000/date_difference/

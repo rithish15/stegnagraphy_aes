@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drive</title>
+
+  <!--Openlayers, Turf and leaflet-->
+  <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v4.6.5/build/ol.js"></script>
+  <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+   integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+   crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
+  integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
+  crossorigin=""></script>
+
+  <!--SweetAlert-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.css">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <style>
+    img#loadingimg{
+      display: none;                   
+      position: fixed;
+      top: 50%;
+      left: 60%;
+      margin-top: -50px; /* half of the height */
+      margin-left: -100px; /* half of the width */
+    }
+    .myButton {
+
+      padding: 30px;
+      display:block;
+      background-color: green;
+      color: white;
+      text-align:center;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+
+      }
+      .ol-popup {
+        position: absolute;
+        background-color: white;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #cccccc;
+        bottom: 12px;
+        left: -50px;
+        min-width: 280px;
+      }
+      .ol-popup:after, .ol-popup:before {
+        top: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      .ol-popup:after {
+        border-top-color: white;
+        border-width: 10px;
+        left: 48px;
+        margin-left: -10px;
+      }
+      .ol-popup:before {
+        border-top-color: #cccccc;
+        border-width: 11px;
+        left: 48px;
+        margin-left: -11px;
+      }
+      .ol-popup-closer {
+        text-decoration: none;
+        position: absolute;
+        top: 2px;
+        right: 8px;
+      }
+      .ol-popup-closer:after {
+        content: "✖";
+      }
+  </style>
+  <script>
+    function logout() {
+            eraseCookie("username");
+            eraseCookie("user_key");
+            window.location.href = 'login.html';
+      }
+      function upload_file(){
+        $("#Fileform").fadeOut('slow');
+        $("#loadingimg").show();
+        var user_id = getCookie('user_key');
+        var fileInput = document.getElementById('myfile');
+        var fname = fileInput.files[0].name;
+        $.ajax({
+        url : 'http://192.168.0.103:8001/upload?userid=' + user_id +'&fname=' + fname ,
+        type : 'POST',
+        cors : true,
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        },
+        contentType: 'application/json',
+        success : function(data){
+          $("#loadingimg").hide();
+          $("#Fileform").fadeOut('slow');
+          location.href = "myfiles.html";
+      }
+        });
+      }
+  </script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="about.html#about" class="nav-link">About</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="about.html#contact" class="nav-link">Contact</a>
+      </li>
+    </ul>
+
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+                <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <div onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <img src="./icon.png" alt="AdminLTE Logo" class="brand-image" style="opacity:.8;background-color: #343A40;">
+      <span class="brand-text font-weight-light">Connect+</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="./dist/img/user.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div id="username" class="info"></div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+               <li class="nav-item has-treeview" id="user_farms">
+                <a href="myfiles.html" class="nav-link"  id="info">
+                  <i class="nav-icon fa fa-folder"></i>
+                  <p>
+                    My Drive
+                  </p>
+                </a>
+                <!--<ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="fas fa-leaf nav-icon"></i>
+                      <p>Ex: Farm 1</p>
+                    </a>
+                  </li>
+                </ul>!--->
+              </li>
+          <li class="nav-item has-treeview">
+            <a href="upload.html" class="nav-link active" id="firstpage">
+              <i class="nav-icon fa fa-upload"></i>
+              <p>
+                Upload Files
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="Public.html" class="nav-link" id="schedule">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                Public
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 id="pending">Upload File</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item">Dashboard</li>
+              <li class="breadcrumb-item active">Upload</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+            <section class="content" id="Fileform">
+
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card card-primary">
+                      <div class="card-header">
+                        <h3 class="card-title">Fill Form</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                     
+                        <div class="card-body">
+                          <div class="form-group">
+                            <label>Visibility</label>
+                            <select class="form-control select2" style="width: 100%;">
+                              <option selected="selected">Private</option>                              
+                            </select>
+                          </div>
+                          <div class="form-group" >
+                            <label for="exampleInputFile">File input</label>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input type="file" id="myfile" name="myfile"><br><br>
+                                 
+                              </div>
+                              
+                            </div>
+                          </div>
+                          
+                        </div>
+                        <!-- /.card-body -->
+        
+                        <div class="card-footer">
+                          <button type="button" class="btn btn-primary" onclick="upload_file()">Upload</button>
+                        </div>
+                      </form>
+                      
+                    </div>
+                    <!-- /.card -->
+                  </div>
+              </div>
+            </section>
+            <img id="loadingimg" src="loading.gif"/>
+    <!-- /.content -->
+  </div>
+  <pre id="fileContent"></pre>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->  
+
+
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<script src="js/cookie.js"></script>
+
+</body>
+<script>
+  document.getElementById("firstpage").onclick = function () {
+    location.href = "upload.html";
+};
+  $(document).ready(function() {
+    var user_name = getCookie('username');
+    console.log(user_name);
+    var tag = "<a href='#' class='d-block'>"+user_name+"</a>"
+    $("#username").html(tag);
+  })
+</script>
+</html>
